@@ -31,6 +31,7 @@ kotlin {
             baseName = "shared"
             isStatic = true
         }
+        extraSpecAttributes["resources"] = "['src/commonMain/resources/**', 'src/iosMain/resources/**']"
     }
     
     sourceSets {
@@ -40,6 +41,7 @@ kotlin {
             }
         }
         val commonMain by getting {
+            resources.srcDir("src/commonMain/resources")
             dependencies {
                 api(compose.runtime)
                 api(compose.foundation)
@@ -59,6 +61,8 @@ kotlin {
         val iosArm64Main by getting
         val iosSimulatorArm64Main by getting
         val iosMain by getting {
+            resources.srcDir("src/commonMain/resources")
+
             dependsOn(commonMain)
             iosX64Main.dependsOn(this)
             iosArm64Main.dependsOn(this)
@@ -70,6 +74,7 @@ kotlin {
 android {
     namespace = "com.mukul.compose.temp"
     compileSdk = 33
+    sourceSets["main"].res.srcDir("src/commonMain/resources")
     defaultConfig {
         minSdk = 24
     }
